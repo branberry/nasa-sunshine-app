@@ -1,0 +1,1 @@
+export const NASA_POWER_API = "";
