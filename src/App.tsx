@@ -3,6 +3,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import './App.css';
 import SolarLevelGraph from './components/SolarLevelGraph';
+import SolarAppBar from './components/SolarAppBar';
 
 const FAKE_SOLAR_DATA =  [
   { x: new Date(2021, 5, 1), y: 8 },
@@ -19,6 +20,7 @@ const FAKE_SOLAR_DATA =  [
 function App() {
   return (
     <div className="App">
+      <SolarAppBar/>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <SolarLevelGraph
