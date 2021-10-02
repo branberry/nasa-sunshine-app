@@ -1,1 +1,1 @@
-export const NASA_POWER_API = "";
+export const NASA_POWER_API = "https://power.larc.nasa.gov/api/";
