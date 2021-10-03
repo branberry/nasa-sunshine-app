@@ -27,7 +27,7 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
       scale={{x: "time"}}
       
     >
-      <VictoryLabel text="Solar Irradiance" x={170} y={30} textAnchor="middle"/>
+      <VictoryLabel text="Hours of Sun per Day" x={170} y={30} textAnchor="middle"/>
       <VictoryBar
         animate={{
           duration: 2000,
