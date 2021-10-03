@@ -1,10 +1,10 @@
 import React from 'react';
 import { 
   VictoryChart, 
-  VictoryArea, 
   VictoryTheme, 
   VictoryAxis,
   VictoryLabel,
+  VictoryBar,
 } from 'victory';
 
 type ChartXAxis = string | number | Date;
@@ -28,7 +28,7 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
       
     >
       <VictoryLabel text="Solar Irradiance" x={170} y={30} textAnchor="middle"/>
-      <VictoryArea
+      <VictoryBar
         animate={{
           duration: 2000,
           onLoad: { duration: 1000 }

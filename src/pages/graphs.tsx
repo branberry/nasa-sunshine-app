@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Card, Grid } from '@mui/material';
 import dayjs from 'dayjs';
 import React from 'react';
 import SolarLevelGraph, { ChartData } from '../components/SolarLevelGraph';
@@ -25,15 +25,16 @@ const GraphsPage: React.FC<GraphsPageProps> = props => {
   return (
     <Grid container spacing={2}>
     <Grid item xs={12}>
-      <Box
-        sx={{
-          bgcolor: 'background.primary'
+      <Card
+        style={{
+          margin: 6
         }}
+        variant="outlined"
       >
         <SolarLevelGraph
           data={data || FAKE_SOLAR_DATA}
         />
-      </Box>
+      </Card>
 
     </Grid>
   </Grid>
