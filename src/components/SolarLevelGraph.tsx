@@ -5,7 +5,6 @@ import {
   VictoryTheme, 
   VictoryAxis,
   VictoryLabel,
-
 } from 'victory';
 
 type ChartXAxis = string | number | Date;
@@ -39,6 +38,11 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
       <VictoryAxis
         width={400}
         height={400}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          }
+        }}
       />
     </VictoryChart>
   );

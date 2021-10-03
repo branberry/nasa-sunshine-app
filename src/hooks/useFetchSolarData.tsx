@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { NASA_POWER_API, PowerAPIParameter } from '../utils/constants';
+import { NASA_POWER_API, PowerAPIParameter, Resolution } from '../utils/constants';
 import dayjs from 'dayjs';
 
 interface FetchSolarDataProps {
@@ -8,12 +8,13 @@ interface FetchSolarDataProps {
   param: PowerAPIParameter;
   startDate: string;
   endDate: string;
+  resolution: Resolution;
   lat?: number;
   lng?: number;
 };
 
 const useFetchSolarData = (props: FetchSolarDataProps) => {
-  const { parameters, lat, lng, startDate, endDate } = props;
+  const { parameters, lat, lng, startDate, endDate, resolution} = props;
 
   const [data, setData] = useState<any>();
   const [error, setError] = useState("");
@@ -28,7 +29,7 @@ const useFetchSolarData = (props: FetchSolarDataProps) => {
     setIsLoading(true);
 
 
-    const DATA_REQUEST_URL = `${NASA_POWER_API}?parameters=${requestParams}&community=SB&longitude=${lng|| 0}&latitude=${lat || 0}&start=${dayjs(startDate).subtract(2, 'year').year()}&end=${dayjs(endDate).subtract(1, 'year').year()}&format=JSON`;
+    const DATA_REQUEST_URL = `${NASA_POWER_API}?parameters=${requestParams}&resolution=${resolution}&community=SB&longitude=${lng|| 0}&latitude=${lat || 0}&start=${dayjs(startDate).subtract(2, 'year').year()}&end=${dayjs(endDate).subtract(1, 'year').year()}&format=JSON`;
 
     try {
 
@@ -44,11 +45,12 @@ const useFetchSolarData = (props: FetchSolarDataProps) => {
 
 
       setIsLoading(false);
-    } catch (error) {
-      setError((error as Error).message);
+    } catch (e) {
+      setError((e as Error).message);
     }
 
-  }, [lat, lng, endDate, startDate, requestParams]);
+  }, [lat, lng, endDate, startDate, requestParams, resolution]);
+  console.log(error)
 
   useEffect(() => {
     fetcher();

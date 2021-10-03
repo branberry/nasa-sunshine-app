@@ -11,14 +11,16 @@ import {
 import MapsPage from './pages/map';
 import useGeolocaton from './hooks/useGeolocation';
 import useFetchSolarData from './hooks/useFetchSolarData';
-import { PowerAPIParameter } from './utils/constants';
+import { DAILY, PowerAPIParameter, Resolution } from './utils/constants';
 
 function App() {
 
-  const [param, setParam] = useState<PowerAPIParameter>('SOLAR_DEFICITS_BLW_CONSEC_07');
+  const [param, setParam] = useState<PowerAPIParameter>('SG_DAY_HOURS');
+  const [resolution, setResolution] = useState<Resolution>(DAILY);
+
 
   const { lat, lng } = useGeolocaton();
-   
+
   const { data } = useFetchSolarData({
     parameters: [param],
     param,
@@ -26,7 +28,12 @@ function App() {
     lng,
     startDate: '2019-01-01',
     endDate: '2020-01-01',
+    resolution,
   });
+
+  console.log(setParam);
+  console.log(setResolution);
+  console.log(data);
 
   return (
     <Router>
