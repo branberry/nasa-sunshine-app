@@ -15,11 +15,12 @@ export interface ChartData {
 }
 
 export interface SolarLevelData {
-  data: Array<ChartData>
+  data: Array<ChartData>;
+  yAxisLabel: string;
 }
 
 const SolarLevelGraph: React.FC<SolarLevelData> = props => {
-  const { data } = props;
+  const { data, yAxisLabel } = props;
 
   return (
     <VictoryChart
@@ -53,7 +54,7 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
         dependentAxis
         width={400}
         height={400}
-        label="Hours of Sunshine"
+        label={yAxisLabel}
         axisLabelComponent={<VictoryLabel dy={-15} />}
         fixLabelOverlap={true}
         style={{

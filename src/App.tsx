@@ -11,14 +11,14 @@ import {
 import MapsPage from './pages/map';
 import useGeolocaton from './hooks/useGeolocation';
 import useFetchSolarData from './hooks/useFetchSolarData';
-import { DAILY, PowerAPIParameter, Resolution } from './utils/constants';
+import {  PowerAPIParameter, Resolution } from './utils/constants';
 
 function App() {
 
   const [param, setParam] = useState<PowerAPIParameter>('SG_DAY_HOURS');
-  const [resolution, setResolution] = useState<Resolution>(DAILY);
+  const [resolution, setResolution] = useState<Resolution>('climatology');
   const [startDate, setStartDate] = useState("2019-01-01");
-  const [endDate, setEndDate] = useState("2019-08-01");
+  const [endDate, setEndDate] = useState("2019-04-01");
 
   const { lat, lng } = useGeolocaton();
 
@@ -50,6 +50,7 @@ function App() {
             setResolution={setResolution}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setParam={setParam}
           />
         </Route>
         <Route path="/map">

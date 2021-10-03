@@ -29,7 +29,7 @@ const useFetchSolarData = (props: FetchSolarDataProps) => {
     setIsLoading(true);
 
 
-    const DATA_REQUEST_URL = `${NASA_POWER_API}?parameters=${requestParams}&resolution=${resolution}&community=SB&longitude=${lng|| 0}&latitude=${lat || 0}&start=${dayjs(startDate).format(resolution !== 'monthly' ? "YYYYMMDD" : "YYYY")}&end=${dayjs(endDate).format(resolution !== 'monthly' ? "YYYYMMDD" : "YYYY")}&format=JSON`;
+    const DATA_REQUEST_URL = `${NASA_POWER_API}?parameters=${(requestParams === "SI_EF_TILTED_SURFACE_OPTIMAL") ? "SI_EF_TILTED_SURFACE" : requestParams}&resolution=${resolution}&community=SB&longitude=${lng|| 0}&latitude=${lat || 0}&start=${dayjs(startDate).format(resolution !== 'climatology' ? "YYYYMMDD" : "YYYY")}&end=${dayjs(endDate).add(resolution === 'climatology' ? 1 : 0, 'year').format(resolution !== 'climatology' ? "YYYYMMDD" : "YYYY")}&format=JSON`;
 
     try {
 
