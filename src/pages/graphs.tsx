@@ -1,26 +1,56 @@
-import { Card, Grid } from '@mui/material';
+import { Card, CardActions, CardContent, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import dayjs from 'dayjs';
 import React from 'react';
 import SolarLevelGraph, { ChartData } from '../components/SolarLevelGraph';
+import { DAILY, MONTHLY, PowerAPIParameter, Resolution } from '../utils/constants';
 
-const FAKE_SOLAR_DATA =  [
-  { x:  dayjs(new Date(2021, 5, 1)).format('DD/MM/YY'), y: 8 },
-  { x: dayjs(new Date(2021, 5, 2)).format('DD/MM/YY'), y: 10 },
-  { x: dayjs(new Date(2021, 5, 3)).format('DD/MM/YY'), y: 7 },
-  { x: dayjs(new Date(2021, 5, 4)).format('DD/MM/YY'), y: 4 },
-  { x: dayjs(new Date(2021, 5, 5)).format('DD/MM/YY'), y: 6 },
-  { x: dayjs(new Date(2021, 5, 6)).format('DD/MM/YY'), y: 3 },
-  { x: dayjs(new Date(2021, 5, 9)).format('DD/MM/YY'), y: 7 },
-  { x: dayjs(new Date(2021, 5, 8)).format('DD/MM/YY'), y: 9 },
-  { x: dayjs(new Date(2021, 5, 9)).format('DD/MM/YY'), y: 6 }
-];
 
 interface GraphsPageProps {
-  data?: Array<ChartData>;
+  data?: any;
+  resolution: Resolution;
+  parameter: PowerAPIParameter;
+  setResolution: React.Dispatch<React.SetStateAction<Resolution>>;
+  setStartDate: React.Dispatch<React.SetStateAction<string>>;
+  setEndDate: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const GraphsPage: React.FC<GraphsPageProps> = props => {
-  const { data } = props;
+  const { 
+    data, 
+    parameter,
+    setResolution,
+    setStartDate,
+    setEndDate,
+  } = props;
+  console.log("DATE!", dayjs("20170101", "YYYYMMDD").format("YYYY"))
+
+  console.log(data);
+
+  let formattedChartData;
+
+  if (data?.properties?.parameter?.[parameter]) {
+    formattedChartData = Object.keys(data.properties.parameter?.[parameter]).map((date: string) => {
+      return {
+        x: dayjs(date, "YYYYMMDD").format("MM/DD/YYYY"),
+        y: data.properties.parameter?.[parameter][date]
+      } as ChartData;
+    });
+  }
+  console.log(formattedChartData);
+
+  const handleResolutionChange = (event: SelectChangeEvent) => {
+    const res = event.target.value as Resolution;
+
+    if (res === 'monthly') {
+      setStartDate('2019-01-01');
+      setEndDate('2019-08-01');
+    } else {
+      setStartDate('2019-01-01');
+      setEndDate('2019-08-01');
+    }
+
+    setResolution(res);
+  };
 
   return (
     <Grid container spacing={2}>
@@ -31,9 +61,31 @@ const GraphsPage: React.FC<GraphsPageProps> = props => {
         }}
         variant="outlined"
       >
-        <SolarLevelGraph
-          data={data || FAKE_SOLAR_DATA}
-        />
+        <CardContent>
+          <SolarLevelGraph
+            data={formattedChartData || []}
+          />
+
+          <CardActions>
+            <FormControl
+              style={{
+                width: "50%"
+              }}
+            >
+              <InputLabel>Date Resolution</InputLabel>
+              <Select
+                label="date"
+                defaultValue={DAILY}
+                onChange={handleResolutionChange}
+              >
+                <MenuItem value={MONTHLY}>Monthly</MenuItem>
+                <MenuItem value={DAILY}>Daily</MenuItem>
+
+              </Select>
+            </FormControl>
+            
+          </CardActions>
+        </CardContent>
       </Card>
 
     </Grid>

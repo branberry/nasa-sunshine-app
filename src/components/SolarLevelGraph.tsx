@@ -35,14 +35,33 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
         }}
         data={data}
       />
-      <VictoryAxis
+      <VictoryAxis 
+        crossAxis
         width={400}
         height={400}
+        fixLabelOverlap={true}
+        axisLabelComponent={<VictoryLabel dy={15} />}
+        label="Date"
         style={{
           tickLabels: {
             fontSize: 8,
           }
         }}
+        
+      />
+      <VictoryAxis 
+        dependentAxis
+        width={400}
+        height={400}
+        label="Hours of Sunshine"
+        axisLabelComponent={<VictoryLabel dy={-15} />}
+        fixLabelOverlap={true}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          }
+        }}
+        
       />
     </VictoryChart>
   );

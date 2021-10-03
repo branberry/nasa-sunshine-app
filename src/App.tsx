@@ -17,7 +17,8 @@ function App() {
 
   const [param, setParam] = useState<PowerAPIParameter>('SG_DAY_HOURS');
   const [resolution, setResolution] = useState<Resolution>(DAILY);
-
+  const [startDate, setStartDate] = useState("2019-01-01");
+  const [endDate, setEndDate] = useState("2019-08-01");
 
   const { lat, lng } = useGeolocaton();
 
@@ -26,8 +27,8 @@ function App() {
     param,
     lat,
     lng,
-    startDate: '2019-01-01',
-    endDate: '2020-01-01',
+    startDate: startDate,
+    endDate: endDate,
     resolution,
   });
 
@@ -42,7 +43,14 @@ function App() {
       </div>
       <Switch>
         <Route path="/">
-          <GraphsPage />
+          <GraphsPage 
+            resolution={resolution}
+            parameter={param}
+            data={data}
+            setResolution={setResolution}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+          />
         </Route>
         <Route path="/map">
           <MapsPage/>
