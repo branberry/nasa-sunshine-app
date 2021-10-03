@@ -15,7 +15,7 @@ export interface ChartData {
   y: number;
 }
 
-interface SolarLevelData {
+export interface SolarLevelData {
   data: Array<ChartData>
 }
 
@@ -28,11 +28,18 @@ const SolarLevelGraph: React.FC<SolarLevelData> = props => {
       scale={{x: "time"}}
       
     >
-      <VictoryLabel text="Solar Irradiance" x={200} y={30} textAnchor="middle"/>
+      <VictoryLabel text="Solar Irradiance" x={170} y={30} textAnchor="middle"/>
       <VictoryArea
+        animate={{
+          duration: 2000,
+          onLoad: { duration: 1000 }
+        }}
         data={data}
       />
-      <VictoryAxis/>
+      <VictoryAxis
+        width={400}
+        height={400}
+      />
     </VictoryChart>
   );
 };

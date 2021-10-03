@@ -1,34 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import './App.css';
-import SolarLevelGraph from './components/SolarLevelGraph';
 import SolarAppBar from './components/SolarAppBar';
-
-const FAKE_SOLAR_DATA =  [
-  { x: new Date(2021, 5, 1), y: 8 },
-  { x: new Date(2021, 5, 2), y: 10 },
-  { x: new Date(2021, 5, 3), y: 7 },
-  { x: new Date(2021, 5, 4), y: 4 },
-  { x: new Date(2021, 5, 7), y: 6 },
-  { x: new Date(2021, 5, 8), y: 3 },
-  { x: new Date(2021, 5, 9), y: 7 },
-  { x: new Date(2021, 5, 10), y: 9 },
-  { x: new Date(2021, 5, 11), y: 6 }
-];
+import GraphsPage from './pages/graphs';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import MapsPage from './pages/map';
+import useGeolocaton from './hooks/useGeolocation';
+import useFetchSolarData from './hooks/useFetchSolarData';
+import { PowerAPIParameter } from './utils/constants';
 
 function App() {
+
+  const [param, setParam] = useState<PowerAPIParameter>('SOLAR_DEFICITS_BLW_CONSEC_07');
+
+  const { lat, lng } = useGeolocaton();
+   
+  const { data } = useFetchSolarData({
+    parameters: [param],
+    param,
+    lat,
+    lng,
+    startDate: '2019-01-01',
+    endDate: '2020-01-01',
+  });
+
   return (
-    <div className="App">
-      <SolarAppBar/>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SolarLevelGraph
-            data={FAKE_SOLAR_DATA}
-          />
-        </Grid>
-      </Grid>
-    </div>
+    <Router>
+      <div className="App">
+        <SolarAppBar/>
+      </div>
+      <Switch>
+        <Route path="/">
+          <GraphsPage />
+        </Route>
+        <Route path="/map">
+          <MapsPage/>
+        </Route>
+      </Switch>
+    </Router>
+
   );
 }
 
